@@ -40,7 +40,25 @@ Library.prototype.getBookById = function (id){
     let book = this.books.filter((book)=>book.id==id);
     return book;
 }
+
+Library.prototype.getBookByIndex = function(id){
+    this.books = this.getLibrary();
+    for(let i in this.books){
+        if(this.books[i].id ===id){
+            return i;
+        }
+    }
+}
+
+Library.prototype.deleteBook = function(id){
+let bookIndex = this.getBookByIndex(id);
+    if(bookIndex){
+    this.books.splice(bookIndex,1);
+    this.updatedLibrary();
+    }
+}
+
 const book1 = new Book('kyle','may',2050,11);
 const lib = new Library("Ndife's");
-lib.addBook(book1);
-//  console.log(lib.getBooks());
+// lib.addBook(book1);
+ console.log(lib.deleteBook(11));
