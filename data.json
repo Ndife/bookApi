@@ -1,1 +1,1 @@
-[{"name":"Junior","author":"uc","year":2022,"id":23},{"name":"ebus","author":"bro","year":2026,"id":24}]
+[{"name":"Junior","author":"uc","year":2022,"id":23,"borrow":true},{"name":"ebus","author":"bro","year":2026,"id":24,"borrow":false}]

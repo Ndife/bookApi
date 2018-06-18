@@ -5,11 +5,12 @@ this.name = name;
 this.books = [];
 }
 
-function Book(name,author,year,id){
+function Book(name,author,year,id,borrow){
 this.name = name;
 this.author = author;
 this.year = year;
 this.id = id;
+this.borrow = borrow;
 }
 
 Library.prototype.getLibrary = function (){
@@ -76,10 +77,22 @@ let books = [];
     return books;
 }
 
+Library.prototype.borrowBook = function(id){
+let bookIndex = this.getBookByIndex(id);
+let borrowBook = this.books[bookIndex];
+if(borrowBook.borrow){
+console.log('book not available');
+}else {
+    console.log('book borrowed successfully');
+    borrowBook.borrow = true;
+    this.updatedLibrary();
+}
+}
+
 const book1 = new Book('kyle','may',2050,11);
 const book2 = new Book('men','bro',2026,243);
 const lib = new Library("Ndife's");
 // lib.addBook(book1);
 // lib.updateBook(24,book2);
 // console.log(lib.getBooks());
-console.log(lib.getBookByParam("id",24));
+lib.borrowBook(23);
