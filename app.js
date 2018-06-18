@@ -58,7 +58,28 @@ let bookIndex = this.getBookByIndex(id);
     }
 }
 
+
+Library.prototype.updateBook = function(id,updateBook){
+bookIndex = this.getBookByIndex(id); 
+this.books[bookIndex] = updateBook;
+this.updatedLibrary();
+}
+
+Library.prototype.getBookByParam = function(param,value){
+let book = this.getLibrary();
+let books = [];
+    for(let i=0; i<book.length; i++){
+        if(book[i][param]===value){
+            books.push(book[i]); 
+        }
+    }
+    return books;
+}
+
 const book1 = new Book('kyle','may',2050,11);
+const book2 = new Book('men','bro',2026,243);
 const lib = new Library("Ndife's");
 // lib.addBook(book1);
- console.log(lib.deleteBook(11));
+// lib.updateBook(24,book2);
+// console.log(lib.getBooks());
+console.log(lib.getBookByParam("id",24));
