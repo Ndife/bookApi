@@ -1,5 +1,49 @@
 const fs = require('fs');
+const express = require('express');
+const bodyparser = require('body-parser');
 
+let app = express();
+
+let server = app.listen(5000, ()=>{
+    console.log('server created, listeninng on port 5000');
+});
+
+const lib = new Library("Ndife's");
+app.use(bodyparser.json());
+
+app.get('/get-books',(req, res)=>{
+    res.send(lib.getBooks());
+});
+
+app.post('/add-book',(req,res)=>{
+    let params = req.body;
+    const book = new Book(params.name,params.author,params.year,Math.floor(Math.random()*1000),false);
+    lib.addBook(book);
+    res.send(lib.getBooks());
+});
+
+app.post('/search-book',(req,res)=>{
+    let params = req.body;
+    res.send(lib.getBookByParam(params.param,params.value));
+})
+
+app.post('/delete-book',(req,res)=>{
+    let params = req.body;
+    lib.deleteBook(params.id);
+    res.send(lib.getBooks());
+});
+
+app.post('/update-book',(req,res)=>{
+    let params = req.body;
+    lib.updateBook(params.id,params.updateBook);
+    res.send(lib.getBooks());
+})
+
+app.post('/borrow-book',(req,res)=>{
+    let params = req.body;
+    lib.borrowBook(params.id);
+    res.send(lib.getBooks());
+});
 function Library(name){
 this.name = name;
 this.books = [];
@@ -81,18 +125,17 @@ Library.prototype.borrowBook = function(id){
 let bookIndex = this.getBookByIndex(id);
 let borrowBook = this.books[bookIndex];
 if(borrowBook.borrow){
-console.log('book not available');
+    this.getBookById(id);
 }else {
-    console.log('book borrowed successfully');
     borrowBook.borrow = true;
     this.updatedLibrary();
 }
 }
 
-const book1 = new Book('kyle','may',2050,11);
-const book2 = new Book('men','bro',2026,243);
-const lib = new Library("Ndife's");
-// lib.addBook(book1);
-// lib.updateBook(24,book2);
-// console.log(lib.getBooks());
-lib.borrowBook(23);
+// const book1 = new Book('kyle','may',2050,11);
+// const book2 = new Book('men','bro',2026,243);
+// // lib.addBook(book1);
+// // lib.updateBook(24,book2);
+// // console.log(lib.getBooks());
+// lib.borrowBook(23);
+
